@@ -1,0 +1,34 @@
+BEGIN_DESC
+Launch the Mercury Redstone on an sub-orbital flight from the cape..
+END_DESC
+
+BEGIN_ENVIRONMENT
+  System Sol
+  Date MJD 37424.6070174769
+END_ENVIRONMENT
+
+BEGIN_FOCUS
+  Ship STS-101
+END_FOCUS
+
+BEGIN_CAMERA
+  TARGET MR-3
+  MODE Extern
+  POS 5.89 -0.51 -88.01
+  TRACKMODE TargetRelative
+  FOV 50.00
+END_CAMERA
+
+BEGIN_STATIONS
+END_STATIONS
+
+BEGIN_SHIPS
+MR-3:Mercury_Redstone
+  STATUS Landed Earth
+  BASE Cape Canaveral:1
+  HEADING 90.00
+  FUEL 1.000
+  CONFIGURATION 0
+  CAPSULE_NUMBER 7
+END
+END_SHIPS
