@@ -9,7 +9,7 @@ environment:
 init:
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-  - git config --global lfs.https://github.com/emgre/projectmercury.git/info/lfs.access basic
+  - ps: git config --global "lfs.https://github.com/$($env:appveyor_repo_name).git/info/lfs.access" basic
 
 before_build:
   - mkdir build
