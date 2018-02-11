@@ -2,6 +2,10 @@ version: 6.0.{build}
 
 image: Visual Studio 2017
 
+environment:
+  access_token:
+    secure: iLFK0Cdb060x52rf3NhkGKhChWBpjhbA9UD7yErxaEbKOduobLn4mKC1rfWzC/n8
+
 init:
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
