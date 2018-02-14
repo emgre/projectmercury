@@ -22,6 +22,12 @@ install:
 before_build:
   - mkdir build
   - cd build
-  - ps: cmake -G "Visual Studio 15 2017" -DORBITER_SDK="/orbitersdk" ..
+  - ps: cmake -G "Visual Studio 15 2017" -DORBITER_SDK="/orbitersdk" -DBUILD_NUMBER="$env:APPVEYOR_BUILD_NUMBER" ..
 build_script:
   - cmake --build . --config Release
+after_build:
+  - cpack .
+
+artifacts:
+  - path: build/ProjectMercury-*.zip
+    name: ProjectMercury-$(APPVEYOR_BUILD_VERSION).zip

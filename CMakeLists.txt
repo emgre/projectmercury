@@ -1,6 +1,12 @@
 cmake_minimum_required (VERSION 3.8)
 
-project (ProjectMercury VERSION 0.1)
+# Set the version number
+set(version 6.0)
+if(BUILD_NUMBER)
+    set(version ${version}.${BUILD_NUMBER})
+endif()
+
+project (ProjectMercury VERSION ${version})
 
 # Preserve folders for Visual Studio
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
