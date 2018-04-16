@@ -21,17 +21,24 @@ endif()
 add_library(orbitersdk STATIC IMPORTED GLOBAL)
 set_property(TARGET orbitersdk PROPERTY IMPORTED_LOCATION ${ORBITER_SDK}/lib/orbiter.lib)
 set_property(TARGET orbitersdk PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${ORBITER_SDK}/include)
-set_property(TARGET orbitersdk PROPERTY INTERFACE_LINK_LIBRARIES ${ORBITER_SDK}/lib/orbiter.lib ${ORBITER_SDK}/lib/Orbitersdk.lib msvcrt.lib libcmtd.lib)
+set_property(TARGET orbitersdk PROPERTY INTERFACE_LINK_LIBRARIES ${ORBITER_SDK}/lib/orbiter.lib ${ORBITER_SDK}/lib/Orbitersdk.lib)
 
-# Use static runtime.
+# Use static runtime
 set(compiler_flags
     CMAKE_CXX_FLAGS
     CMAKE_CXX_FLAGS_DEBUG
+    CMAKE_CXX_FLAGS_MINSIZEREL
     CMAKE_CXX_FLAGS_RELEASE
+    CMAKE_CXX_FLAGS_RELWITHDEBINFO
     CMAKE_C_FLAGS
     CMAKE_C_FLAGS_DEBUG
+    CMAKE_C_FLAGS_MINSIZEREL
     CMAKE_C_FLAGS_RELEASE
+    CMAKE_C_FLAGS_RELWITHDEBINFO
 )
 foreach(compiler_flag ${compiler_flags})
-  string(REPLACE "/MD" "/MT" ${compiler_flag} "${${compiler_flag}}")
+    string(REPLACE "/MD" "/MT" ${compiler_flag} "${${compiler_flag}}")
 endforeach()
+
+# Ignore pragma MSVCRT
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:MSVCRT")
