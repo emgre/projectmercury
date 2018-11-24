@@ -10,9 +10,11 @@ environment:
     secure: qStCFp3SKOArzUzuppdZhp9xn8GeVwWzwndR9OSu1JiCGCvbrm8OHJrhLB8UeF3L
 
 install:
-  # Download Orbiter SDK from AWS S3
+  # Download Orbiter SDK and XRSound SDK from AWS S3
   - aws s3 cp s3://emgre-orbiter/orbitersdk/orbitersdk-160828.zip /orbitersdk.zip --region ca-central-1
+  - aws s3 cp s3://emgre-orbiter/xrsound/xrsound-1.0.zip /xrsound.zip --region ca-central-1
   - 7z x /orbitersdk.zip -o/orbitersdk
+  - 7z x /xrsound.zip -o/orbitersdk/XRSound
 
 before_build:
   # CMake generate
