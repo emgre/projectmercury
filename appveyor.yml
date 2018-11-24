@@ -3,17 +3,17 @@ version: 6.0.{build}
 image: Visual Studio 2017
 
 environment:
-  access_token:
-    secure: iLFK0Cdb060x52rf3NhkGKhChWBpjhbA9UD7yErxaEbKOduobLn4mKC1rfWzC/n8
+  #access_token:
+  #  secure: iLFK0Cdb060x52rf3NhkGKhChWBpjhbA9UD7yErxaEbKOduobLn4mKC1rfWzC/n8
   AWS_ACCESS_KEY_ID:
     secure: pgxnj2HA4cc9CLTElrIshguBiEldzrqUnhPA8y8hedo=
   AWS_SECRET_ACCESS_KEY:
     secure: qStCFp3SKOArzUzuppdZhp9xn8GeVwWzwndR9OSu1JiCGCvbrm8OHJrhLB8UeF3L
 
-init:
-  - git config --global credential.helper store
-  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-  - ps: git config --global "lfs.https://github.com/$($env:appveyor_repo_name).git/info/lfs.access" basic
+#init:
+#  - git config --global credential.helper store
+#  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+#  - ps: git config --global "lfs.https://github.com/$($env:appveyor_repo_name).git/info/lfs.access" basic
 
 install:
   - aws s3 cp s3://emgre-orbiter/sdks/orbitersdk-160828.zip /orbitersdk.zip --region ca-central-1
