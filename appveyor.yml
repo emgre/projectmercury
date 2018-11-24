@@ -9,9 +9,6 @@ environment:
   AWS_SECRET_ACCESS_KEY:
     secure: qStCFp3SKOArzUzuppdZhp9xn8GeVwWzwndR9OSu1JiCGCvbrm8OHJrhLB8UeF3L
 
-# Download the repository as a zip file (so it doesn't it my Git LFS usage)
-shallow_clone: true
-
 install:
   # Download Orbiter SDK from AWS S3
   - aws s3 cp s3://emgre-orbiter/sdks/orbitersdk-160828.zip /orbitersdk.zip --region ca-central-1
