@@ -21,7 +21,7 @@ endif()
 add_library(orbitersdk STATIC IMPORTED GLOBAL)
 set_property(TARGET orbitersdk PROPERTY IMPORTED_LOCATION ${ORBITER_SDK}/lib/orbiter.lib)
 set_property(TARGET orbitersdk PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${ORBITER_SDK}/include)
-set_property(TARGET orbitersdk PROPERTY INTERFACE_LINK_LIBRARIES ${ORBITER_SDK}/lib/orbiter.lib ${ORBITER_SDK}/lib/Orbitersdk.lib)
+set_property(TARGET orbitersdk PROPERTY INTERFACE_LINK_LIBRARIES ${ORBITER_SDK}/lib/orbiter.lib ${ORBITER_SDK}/lib/Orbitersdk.lib -NODEFAULTLIB:msvcrt.lib)
 
 # Use static runtime
 set(compiler_flags
@@ -39,6 +39,3 @@ set(compiler_flags
 foreach(compiler_flag ${compiler_flags})
     string(REPLACE "/MD" "/MT" ${compiler_flag} "${${compiler_flag}}")
 endforeach()
-
-# Ignore pragma MSVCRT
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /NODEFAULTLIB:MSVCRT")
