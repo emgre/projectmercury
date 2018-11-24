@@ -3,31 +3,31 @@ version: 6.0.{build}
 image: Visual Studio 2017
 
 environment:
-  #access_token:
-  #  secure: iLFK0Cdb060x52rf3NhkGKhChWBpjhbA9UD7yErxaEbKOduobLn4mKC1rfWzC/n8
+  # AWS S3 credentials to download Orbiter SDK
   AWS_ACCESS_KEY_ID:
     secure: pgxnj2HA4cc9CLTElrIshguBiEldzrqUnhPA8y8hedo=
   AWS_SECRET_ACCESS_KEY:
     secure: qStCFp3SKOArzUzuppdZhp9xn8GeVwWzwndR9OSu1JiCGCvbrm8OHJrhLB8UeF3L
 
-#init:
-#  - git config --global credential.helper store
-#  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-#  - ps: git config --global "lfs.https://github.com/$($env:appveyor_repo_name).git/info/lfs.access" basic
+# Download the repository as a zip file (so it doesn't it my Git LFS usage)
+shallow_clone: true
 
 install:
+  # Download Orbiter SDK from AWS S3
   - aws s3 cp s3://emgre-orbiter/sdks/orbitersdk-160828.zip /orbitersdk.zip --region ca-central-1
   - 7z x /orbitersdk.zip -o/orbitersdk
 
 before_build:
-  - mkdir build
-  - cd build
-  - ps: cmake -G "Visual Studio 15 2017" -DORBITER_SDK="/orbitersdk" -DBUILD_NUMBER="$env:APPVEYOR_BUILD_NUMBER" ..
+  # CMake generate
+  - ps: cmake -G "Visual Studio 15 2017" -DORBITER_SDK="/orbitersdk" -DBUILD_NUMBER="$env:APPVEYOR_BUILD_NUMBER" .
 build_script:
-  - cmake --build . --config Release
+  # Build
+  - ps: cmake --build . --config Release
 after_build:
-  - cpack .
+  # Pack in zip archive
+  - ps: cpack .
 
+# Register artifacts
 artifacts:
   - path: build/ProjectMercury-*.zip
     name: ProjectMercury-$(APPVEYOR_BUILD_VERSION).zip
