@@ -1,5 +1,10 @@
 cmake_minimum_required (VERSION 3.8)
 
+# Check that we are compiling for Windows 32-bit
+if((NOT WIN32) OR (NOT "${CMAKE_SIZEOF_VOID_P}" STREQUAL "4"))
+    message(FATAL_ERROR "Orbiter projects must be compiled on Windows targeting x86 architecture.")
+endif()
+
 # Set the directories variables
 set(ORBITER_DIR CACHE PATH "Path to Orbiter installation")
 if(ORBITER_DIR)
@@ -7,21 +12,11 @@ if(ORBITER_DIR)
     if(NOT EXISTS ${ORBITER_DIR}/orbiter.exe)
         message(FATAL_ERROR "ORBITER_DIR cache variable must point to a valid Orbiter installation.")
     endif()
-    set(ORBITER_SDK ${ORBITER_DIR}/Orbitersdk CACHE PATH "Path to OrbiterSDK")
+    set(ORBITER_SDK_DIR ${ORBITER_DIR}/Orbitersdk CACHE PATH "Path to OrbiterSDK")
 endif()
-if(NOT ORBITER_SDK)
-    message(FATAL_ERROR "You must either set ORBITER_DIR or ORBITER_SDK cache variable.")
+if(NOT ORBITER_SDK_DIR)
+    message(FATAL_ERROR "You must either set ORBITER_DIR or ORBITER_SDK_DIR cache variable.")
 endif()
-if(NOT EXISTS ${ORBITER_SDK}/lib/orbiter.lib)
-    message(FATAL_ERROR "ORBITER_SDK cache variable must point to a valid OrbiterSDK directory.")
-endif()
-
-
-# Add Orbiter SDK imported target
-add_library(orbitersdk STATIC IMPORTED GLOBAL)
-set_property(TARGET orbitersdk PROPERTY IMPORTED_LOCATION ${ORBITER_SDK}/lib/orbiter.lib)
-set_property(TARGET orbitersdk PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${ORBITER_SDK}/include)
-set_property(TARGET orbitersdk PROPERTY INTERFACE_LINK_LIBRARIES ${ORBITER_SDK}/lib/orbiter.lib ${ORBITER_SDK}/lib/Orbitersdk.lib -NODEFAULTLIB:msvcrt.lib)
 
 # Use static runtime
 set(compiler_flags

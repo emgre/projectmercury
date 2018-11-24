@@ -11,8 +11,11 @@ project (ProjectMercury VERSION ${version})
 # Preserve folders for Visual Studio
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# Orbiter SDK
+# Setup CMake for Orbiter
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 include(./cmake/orbiter.cmake)
+find_package(OrbiterSDK REQUIRED)
+find_package(XRSound REQUIRED)
 
 # Add all the projects
 add_subdirectory(./project_mercury)
