@@ -1,6 +1,8 @@
 Documentation
 #############
 
+The documentation is available at https://projectmercury.space.
+
 Philosophy
 ==========
 
@@ -38,12 +40,45 @@ reStructuredText tutorials:
 * `An introduction to Sphinx and Read the Docs for Technical Writers <http://www.ericholscher.com/blog/2016/jul/1/sphinx-and-rtd-for-writers>`_, by Eric Holscher.
 * `reStructuredText Primer <http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_
 * `Writing content <https://mcss.mosra.cz/pelican/writing-content/>`_, by Vladimír Von­druš.
+* `Read the Docs Sphinx Theme <https://sphinx-rtd-theme.readthedocs.io/en/latest/index.html>`_, for examples of the theme used.
 
 Building
 ========
 
-* `Read the Docs Sphinx Theme <https://sphinx-rtd-theme.readthedocs.io/en/latest/index.html>`_
+Requirements
+------------
 
+To build the documentation, the following programs are needed:
+
+* `Python 3 <https://www.python.org/downloads/>`_
+* `sphinx <https://pypi.org/project/Sphinx/>`_ :code:`pip install sphinx`
+* `sphinx_rtd_theme <https://pypi.org/project/sphinx_rtd_theme/>`_ :code:`pip install sphinx_rtd_theme`
+
+Build instructions
+------------------
+
+To documentation can be built by following these steps:
+
+#. Open a terminal in the :code:`docs` directory
+#. Run :code:`sphinx-build . build`
+
+The documentation will available in :code:`docs/build` and can be opened with
+any web browser. The default entry-point of the documentation is the
+:code:`index.html` file.
+
+Continuous integration
+======================
+
+`Read the Docs <https://readthedocs.org/>`_ is used to automatically build and
+serve the different versions of the documentation. The result can be accessed at
+https://projectmercury.space.
+
+The documentation is built for every commit in the :code:`develop` branch.
+Therefore, the :code:`latest` version of the documentation points to the latest
+commit in the :code:`develop` branch.
+
+Each of the releases is tagged with a semantic versioning number [#semver]_ and
+will be made available as :code:`stable`.
 
 References
 ==========
@@ -53,3 +88,4 @@ References
 .. [#zverovich] `reStructuredText vs Markdown for documentation <http://www.zverovich.net/2016/06/16/rst-vs-markdown.html>`_, Victor Zverovich.
 .. [#pythondoc] `Documenting Python <https://devguide.python.org/documenting/>`_
 .. [#linuxkerneldoc] `The Linux Kernel documentation <https://www.kernel.org/doc/html/latest/>`_
+.. [#semver] `Semantic Versioning 2.0.0 <https://semver.org/spec/v2.0.0.html>`_
