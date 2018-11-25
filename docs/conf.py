@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Project Mercury'
-copyright = '2018, Émile Grégoire'
-author = 'Émile Grégoire'
+copyright = u'2018, Émile Grégoire'
+author = u'Émile Grégoire'
 
 # The short X.Y version
 version = '6.0'
@@ -129,7 +129,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'ProjectMercury.tex', 'Project Mercury Documentation',
-     'Émile Grégoire', 'manual'),
+     u'Émile Grégoire', 'manual'),
 ]
 
 
