@@ -19,6 +19,7 @@ find_package(XRSound REQUIRED)
 
 # Add all the projects
 add_subdirectory(./project_mercury)
+add_subdirectory(./sound_test)
 
 # Packaging
 set(CPACK_GENERATOR "ZIP")
