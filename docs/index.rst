@@ -5,8 +5,11 @@ Welcome to Project Mercury's documentation!
    :caption: Astronaut's documentation
    :maxdepth: 4
 
-   dev/building
+   user/history
 
 .. toctree::
    :caption: Engineer's documentation
    :maxdepth: 4
+
+   dev/building
+   dev/documentation
