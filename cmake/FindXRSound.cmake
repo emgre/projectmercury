@@ -21,7 +21,7 @@ find_package_handle_standard_args(XRSound
 )
 
 # Create target
-if(OrbiterSDK_FOUND)
+if(XRSound_FOUND)
     add_library(xrsound STATIC IMPORTED GLOBAL)
     set_property(TARGET xrsound PROPERTY IMPORTED_LOCATION_RELEASE ${XRSOUND_RELEASE_LIB})
     set_property(TARGET xrsound PROPERTY IMPORTED_LOCATION_DEBUG ${XRSOUND_DEBUG_LIB})
