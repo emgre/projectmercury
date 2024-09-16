@@ -1,36 +1,24 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required(VERSION 3.19)
 
-# Check that we are compiling for Windows 32-bit
-if((NOT WIN32) OR (NOT "${CMAKE_SIZEOF_VOID_P}" STREQUAL "4"))
-    message(FATAL_ERROR "Orbiter projects must be compiled on Windows targeting x86 architecture.")
+# Check that we are compiling for Windows
+if(NOT WIN32)
+    message(FATAL_ERROR "Orbiter projects must be compiled on Windows.")
 endif()
 
-# Set the directories variables
+# Set this directory as a module path so we can do find_package() for Orbiter stuff
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
+
+# ORBITER_DIR is used to install automatically to Orbiter and set the ORBITER_SDK_DIR
 set(ORBITER_DIR CACHE PATH "Path to Orbiter installation")
 if(ORBITER_DIR)
-    set(CMAKE_INSTALL_PREFIX ${ORBITER_DIR} CACHE PATH "Installation path" FORCE)
-    if(NOT EXISTS ${ORBITER_DIR}/orbiter.exe)
+    if(NOT EXISTS ${ORBITER_DIR}/Orbiter_ng.exe)
         message(FATAL_ERROR "ORBITER_DIR cache variable must point to a valid Orbiter installation.")
     endif()
+    set(CMAKE_INSTALL_PREFIX ${ORBITER_DIR} CACHE PATH "Installation path" FORCE)
     set(ORBITER_SDK_DIR ${ORBITER_DIR}/Orbitersdk CACHE PATH "Path to OrbiterSDK")
 endif()
-if(NOT ORBITER_SDK_DIR)
-    message(FATAL_ERROR "You must either set ORBITER_DIR or ORBITER_SDK_DIR cache variable.")
-endif()
 
-# Use static runtime
-set(compiler_flags
-    CMAKE_CXX_FLAGS
-    CMAKE_CXX_FLAGS_DEBUG
-    CMAKE_CXX_FLAGS_MINSIZEREL
-    CMAKE_CXX_FLAGS_RELEASE
-    CMAKE_CXX_FLAGS_RELWITHDEBINFO
-    CMAKE_C_FLAGS
-    CMAKE_C_FLAGS_DEBUG
-    CMAKE_C_FLAGS_MINSIZEREL
-    CMAKE_C_FLAGS_RELEASE
-    CMAKE_C_FLAGS_RELWITHDEBINFO
-)
-foreach(compiler_flag ${compiler_flags})
-    string(REPLACE "/MD" "/MT" ${compiler_flag} "${${compiler_flag}}")
-endforeach()
+# ORBITER_SDK_DIR is used to detect the SDK
+if((NOT ORBITER_SDK_DIR) OR (NOT EXISTS ${ORBITER_SDK_DIR}/lib/Orbitersdk.lib))
+    message(FATAL_ERROR "ORBITER_SDK_DIR cache variable must point to a valid Orbiter SDK installation.")
+endif()
