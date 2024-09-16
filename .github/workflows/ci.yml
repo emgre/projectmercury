@@ -1,0 +1,37 @@
+name: Continuous Integration
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        orbiter: ["Orbiter2016"]
+        mode: ["Debug", "Release"]
+    steps:
+    - name: "Checkout repository"
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+    - name: "Download Orbiter SDK"
+      run: |
+        $baseurl = 'https://f004.backblazeb2.com/file/projectmercury/sdks'
+        $sdkdir = 'OrbiterSDK'
+        if ('${{ matrix.orbiter }}' -eq 'Orbiter2016')
+        {
+          (Invoke-WebRequest -Uri "${baseurl}/orbiter2016_sdk_160828.zip").Content | Expand-Archive -DestinationPath $sdkdir
+          (Invoke-WebRequest -Uri "${baseurl}/xrsound20_sdk_200720.zip").Content | Expand-Archive -DestinationPath $sdkdir
+        }
+        else
+        {
+          throw 'Unknown SDK ${{ matrix.orbiter }}'
+        }
+    - name: Configure
+      run: >
+        mkdir build
+        cd build
+        cmake .. -G Ninja -A Win32 -DCMAKE_BUILD_TYPE=${{ matrix.mode }}
+    - name: Build
+      working-directory: build
+      run: cmake --build .
